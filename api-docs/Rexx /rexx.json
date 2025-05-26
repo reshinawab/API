@@ -1,1 +1,2113 @@
+{
+    
+        "openapi": "3.0.1",
+        "info": {
+            "title": "Rexx Systems",
+            "description": "OpenAPI for Rexx",
+            "version": "latest",
+            "license": {
+                "name": "MIT",
+                "url": "https://opensource.org/licenses/MIT"
+            },
+            "contact": {
+                "name": "Rexx Support Team",
+                "url": "https://www.rexx-systems.com/contact/"
+            },
+            "x-aquera": {
+                "primaryDeveloper": "tarun.rana@aquera.com",
+                "teamLead": "maha.baskaran@aquera.com",
+                "supportUrl": "https://support.aquera.com"
+            }
+        },
+        "servers": [
+            {
+                "url": "https://{hostname}",
+                "description": "Hostname of the Rexx instance",
+                "variables": {
+                    "hostname": {
+                        "description": "Hostname of the Rexx instance",
+                        "default": "demo.rexx-suite.com/rexx_hub"
+                    }
+                }
+            }
+        ],
+        "paths": {
+            "/tenantSuffix/v1/employees": {
+                "get": {
+                    "operationId": "getAllEmployees",
+                    "summary": "Retrieve a paginated list of employees",
+                    "description": "Returns employee data including staff ID, name, position, organization unit, and employment details. Paginated on page number.",
+                    "parameters": [
+                        {
+                            "name": "page",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                                "type": "integer"
+                            },
+                            "description": "The results page to be displayed (starts at 1)"
+                        },
+                        {
+                            "name": "eintrittsdatum_von",
+                            "in": "query",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            "description": "Filter to return employees who entered on or after this date (YYYY-MM-DD)"
+                        }
+                    ],
+                    "tags": [
+                        "Employees"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with employee data.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "staff_id": {
+                                                            "type": "integer",
+                                                            "example": 1372
+                                                        },
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Nico"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Berge"
+                                                        },
+                                                        "position_name": {
+                                                            "type": "string",
+                                                            "example": "Qualitätskontrolle"
+                                                        },
+                                                        "org_unit_name": {
+                                                            "type": "string",
+                                                            "example": "Executive Service"
+                                                        },
+                                                        "direction_name": {
+                                                            "type": "string",
+                                                            "example": "meine1"
+                                                        },
+                                                        "employment": {
+                                                            "type": "string",
+                                                            "example": "Freelancer"
+                                                        },
+                                                        "entry_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-03-01"
+                                                        },
+                                                        "meta_status": {
+                                                            "type": "string",
+                                                            "example": "Aktiv"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid parameters."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid authentication token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access to this resource is denied."
+                        },
+                        "404": {
+                            "description": "Not Found – Resource does not exist."
+                        },
+                        "422": {
+                            "description": "Unprocessable Entity – Valid request but semantic error."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}": {
+                "get": {
+                    "operationId": "getEmployeeById",
+                    "summary": "Retrieve details of a specific employee by ID.",
+                    "description": "Fetches complete employee data for the given employee ID, including name, position, organization unit, and status. Requires authorization.",
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee to retrieve.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "tags": [
+                        "Employees"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with employee data.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "staff_id": {
+                                                        "type": "integer",
+                                                        "example": 465
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "Reto"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Ranzen"
+                                                    },
+                                                    "position_name": {
+                                                        "type": "string",
+                                                        "example": "HR Manager"
+                                                    },
+                                                    "org_unit_name": {
+                                                        "type": "string",
+                                                        "example": "Administration"
+                                                    },
+                                                    "direction_name": {
+                                                        "type": "string",
+                                                        "example": "meine1"
+                                                    },
+                                                    "employment": {
+                                                        "type": "string",
+                                                        "example": "Angestellt"
+                                                    },
+                                                    "entry_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-03-01"
+                                                    },
+                                                    "meta_status": {
+                                                        "type": "string",
+                                                        "example": "Aktiv"
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T14:24:17+01:00"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_f4bdf68b72398fc84cbc5999e3059e6e"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid employee ID."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid authentication token."
+                        },
+                        "403": {
+                            "description": "Forbidden – You do not have access to this employee's data."
+                        },
+                        "404": {
+                            "description": "Not Found – Employee with the given ID does not exist."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}/org-units": {
+                "get": {
+                    "operationId": "getOrgUnitsByEmployeeId",
+                    "summary": "Get organizational unit assignments for an employee",
+                    "description": "Returns the organizational unit assignments of a specific employee. The results are paginated and include validity periods and hierarchy paths.",
+                    "tags": [
+                        "Employees"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "name": "page",
+                            "in": "query",
+                            "required": true,
+                            "description": "The results page to be displayed (starts at 1).",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with organizational unit assignments.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "org_unit_id": {
+                                                            "type": "integer",
+                                                            "example": 300
+                                                        },
+                                                        "org_unit_name": {
+                                                            "type": "string",
+                                                            "example": "Executive Service"
+                                                        },
+                                                        "org_unit_path_down": {
+                                                            "type": "string",
+                                                            "example": "RexxMe Company > Headquarters > Hamburg > HR Hamburg > Personnel development > Executive Service"
+                                                        },
+                                                        "org_unit_path_up": {
+                                                            "type": "string",
+                                                            "example": "Executive Service > Personnel development > HR Hamburg > Hamburg > Headquarters > RexxMe Company"
+                                                        },
+                                                        "valid_from": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-03-01"
+                                                        },
+                                                        "valid_to": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-08-01"
+                                                        },
+                                                        "percentage": {
+                                                            "type": "integer",
+                                                            "example": 100
+                                                        },
+                                                        "assignment_type": {
+                                                            "type": "string",
+                                                            "example": "employee"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "_links": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "self": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "first": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "last": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid query parameters."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access to this resource is denied."
+                        },
+                        "404": {
+                            "description": "Not Found – No org units found for given employee."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Something went wrong on the server."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}/events/{eventType}": {
+                "get": {
+                    "operationId": "getEmployeeEventsByType",
+                    "summary": "Retrieve events assigned to an employee by event type",
+                    "description": "Returns the list of events assigned to a specific employee, optionally filtered by a specific event type such as E-Learning or Training.",
+                    "tags": [
+                        "Employees"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "name": "eventType",
+                            "in": "path",
+                            "required": true,
+                            "description": "The optional event type identifier to filter events (e.g., 1 for E-Learning).",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with list of assigned events.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "event_id": {
+                                                            "type": "integer",
+                                                            "example": 201
+                                                        },
+                                                        "event_name": {
+                                                            "type": "string",
+                                                            "example": "Diversity Training (Zürich)"
+                                                        },
+                                                        "subscriber_status": {
+                                                            "type": "string",
+                                                            "example": "Genehmigt"
+                                                        },
+                                                        "event_type": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "event_from": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2017-10-02"
+                                                        },
+                                                        "event_to": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2017-10-03"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2016-09-23"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2016-09-23 14:53:11"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid parameters or malformed path."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access denied for this employee or event type."
+                        },
+                        "404": {
+                            "description": "Not Found – No events found for given employee or event type."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Request rate exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment": {
+                "post": {
+                    "operationId": "createEquipment",
+                    "summary": "Create new equipment",
+                    "description": "Creates a new equipment entry in the rexx Suite. Some fields are optional, but it is recommended to provide complete information. Returns the ID of the newly created equipment on success.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Office Chair"
+                                        },
+                                        "owner": {
+                                            "type": "string",
+                                            "example": "rfouashti"
+                                        },
+                                        "equipment_type_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "aktiv"
+                                        },
+                                        "inventory_number": {
+                                            "type": "string",
+                                            "example": "137"
+                                        },
+                                        "license_plate": {
+                                            "type": "string",
+                                            "example": "xyz"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "rfo@rexx-systems.de"
+                                        },
+                                        "manufacturer": {
+                                            "type": "string",
+                                            "example": "SteelCase"
+                                        },
+                                        "producer_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "supplier_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "insurance_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "leasing_partner_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "acquisition_costs_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "acquisition_costs_gross": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_gross_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "list_price_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "list_price_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "equipment_type_id"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Equipment created successfully.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully created."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1095
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T11:50:01+00:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "created"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req-c83a64f790b8c725861ae01875cf"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Validation failed or required fields missing."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Insufficient permissions."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment/{equipmentId}": {
+                "patch": {
+                    "operationId": "updateEquipment",
+                    "summary": "Update an existing equipment item",
+                    "description": "Updates equipment in the rexx Suite by specifying the equipment ID. Not all fields are mandatory, but providing complete information is recommended. Returns confirmation and equipment ID upon success.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to update.",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Ergonomic Sitzball"
+                                        },
+                                        "owner": {
+                                            "type": "string",
+                                            "example": "rfouashti"
+                                        },
+                                        "equipment_type_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "aktiv"
+                                        },
+                                        "inventory_number": {
+                                            "type": "string",
+                                            "example": "987"
+                                        },
+                                        "license_plate": {
+                                            "type": "string",
+                                            "example": "654"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "rfo@rexx-systems.de"
+                                        },
+                                        "manufacturer": {
+                                            "type": "string",
+                                            "example": "SteelCase"
+                                        },
+                                        "producer_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "supplier_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "insurance_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "leasing_partner_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "acquisition_costs_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "acquisition_costs_gross": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_gross_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "list_price_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "list_price_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Equipment updated successfully.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully updated."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1995
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T15:42:04+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "updated"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_239a23760a894b0871c68740b54541e1"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Validation failed or missing fields."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Invalid or missing token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access not allowed for this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – Equipment with specified ID does not exist."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Unexpected system issue."
+                        }
+                    }
+                },
+                "delete": {
+                    "operationId": "deleteEquipment",
+                    "summary": "Delete equipment by ID",
+                    "description": "Deletes the specified equipment from the rexx Suite. Responds with confirmation and the ID of the deleted equipment.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to delete.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successfully deleted the equipment.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully deleted."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1994
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-19T11:44:47+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "deleted"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_4da51ce8acdd957254dc91eafc6a93c6"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid or missing ID."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Authentication failed or token missing."
+                        },
+                        "403": {
+                            "description": "Forbidden – You are not allowed to delete this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – No equipment found with the given ID."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Request rate exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Unexpected error occurred."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment/{equipmentId}/assignments": {
+                "post": {
+                    "operationId": "assignEquipmentToEmployee",
+                    "summary": "Assign equipment to a personal ID",
+                    "description": "Assigns a specific equipment item to a personal ID (entity_id) in the rexx Suite. A complete assignment object is recommended even though not all fields are required.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to assign.",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignment_type": {
+                                            "type": "string",
+                                            "example": "employee"
+                                        },
+                                        "entity_id": {
+                                            "type": "integer",
+                                            "example": 465
+                                        },
+                                        "valid_from": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-03-11"
+                                        },
+                                        "valid_to": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-09-30"
+                                        },
+                                        "handover_protocol_upload_uuid": {
+                                            "type": "string",
+                                            "example": "null"
+                                        },
+                                        "return_protocol_upload_uuid": {
+                                            "type": "string",
+                                            "example": "null"
+                                        },
+                                        "comment": {
+                                            "type": "string",
+                                            "example": "Example String"
+                                        }
+                                    },
+                                    "required": [
+                                        "entity_id"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Successful assignment of equipment.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment assignment was successfully created."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1095
+                                                    },
+                                                    "assignment_id": {
+                                                        "type": "integer",
+                                                        "example": 107
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T16:13:16+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "created"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_b6e150ad025d46ef7661c7a7c5e274"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Missing required fields or invalid values."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Not allowed to assign this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – Equipment not found."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            }
+        },
+        "components": {
+            "securitySchemes": {
+                "BearerToken": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "description": "Configure the API key for the bearer authentication."
+                }
+            },
+            "responses": {
+                "error": {
+                    "description": "Error"
+                }
+            }
+        }
+    }
 
+{
+    
+        "openapi": "3.0.1",
+        "info": {
+            "title": "Rexx Systems",
+            "description": "OpenAPI for Rexx",
+            "version": "latest",
+            "license": {
+                "name": "MIT",
+                "url": "https://opensource.org/licenses/MIT"
+            },
+            "contact": {
+                "name": "Rexx Support Team",
+                "url": "https://www.rexx-systems.com/contact/"
+            },
+            "x-aquera": {
+                "primaryDeveloper": "tarun.rana@aquera.com",
+                "teamLead": "maha.baskaran@aquera.com",
+                "supportUrl": "https://support.aquera.com"
+            }
+        },
+        "servers": [
+            {
+                "url": "https://{hostname}",
+                "description": "Hostname of the Rexx instance",
+                "variables": {
+                    "hostname": {
+                        "description": "Hostname of the Rexx instance",
+                        "default": "demo.rexx-suite.com/rexx_hub"
+                    }
+                }
+            }
+        ],
+        "paths": {
+            "/tenantSuffix/v1/employees": {
+                "get": {
+                    "operationId": "getAllEmployees",
+                    "summary": "Retrieve a paginated list of employees",
+                    "description": "Returns employee data including staff ID, name, position, organization unit, and employment details. Paginated on page number.",
+                    "parameters": [
+                        {
+                            "name": "page",
+                            "in": "query",
+                            "required": true,
+                            "schema": {
+                                "type": "integer"
+                            },
+                            "description": "The results page to be displayed (starts at 1)"
+                        },
+                        {
+                            "name": "eintrittsdatum_von",
+                            "in": "query",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            "description": "Filter to return employees who entered on or after this date (YYYY-MM-DD)"
+                        }
+                    ],
+                    "tags": [
+                        "Employees"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with employee data.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "staff_id": {
+                                                            "type": "integer",
+                                                            "example": 1372
+                                                        },
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Nico"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Berge"
+                                                        },
+                                                        "position_name": {
+                                                            "type": "string",
+                                                            "example": "Qualitätskontrolle"
+                                                        },
+                                                        "org_unit_name": {
+                                                            "type": "string",
+                                                            "example": "Executive Service"
+                                                        },
+                                                        "direction_name": {
+                                                            "type": "string",
+                                                            "example": "meine1"
+                                                        },
+                                                        "employment": {
+                                                            "type": "string",
+                                                            "example": "Freelancer"
+                                                        },
+                                                        "entry_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-03-01"
+                                                        },
+                                                        "meta_status": {
+                                                            "type": "string",
+                                                            "example": "Aktiv"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid parameters."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid authentication token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access to this resource is denied."
+                        },
+                        "404": {
+                            "description": "Not Found – Resource does not exist."
+                        },
+                        "422": {
+                            "description": "Unprocessable Entity – Valid request but semantic error."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}": {
+                "get": {
+                    "operationId": "getEmployeeById",
+                    "summary": "Retrieve details of a specific employee by ID.",
+                    "description": "Fetches complete employee data for the given employee ID, including name, position, organization unit, and status. Requires authorization.",
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee to retrieve.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "tags": [
+                        "Employees"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with employee data.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "staff_id": {
+                                                        "type": "integer",
+                                                        "example": 465
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "Reto"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Ranzen"
+                                                    },
+                                                    "position_name": {
+                                                        "type": "string",
+                                                        "example": "HR Manager"
+                                                    },
+                                                    "org_unit_name": {
+                                                        "type": "string",
+                                                        "example": "Administration"
+                                                    },
+                                                    "direction_name": {
+                                                        "type": "string",
+                                                        "example": "meine1"
+                                                    },
+                                                    "employment": {
+                                                        "type": "string",
+                                                        "example": "Angestellt"
+                                                    },
+                                                    "entry_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-03-01"
+                                                    },
+                                                    "meta_status": {
+                                                        "type": "string",
+                                                        "example": "Aktiv"
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T14:24:17+01:00"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_f4bdf68b72398fc84cbc5999e3059e6e"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid employee ID."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid authentication token."
+                        },
+                        "403": {
+                            "description": "Forbidden – You do not have access to this employee's data."
+                        },
+                        "404": {
+                            "description": "Not Found – Employee with the given ID does not exist."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}/org-units": {
+                "get": {
+                    "operationId": "getOrgUnitsByEmployeeId",
+                    "summary": "Get organizational unit assignments for an employee",
+                    "description": "Returns the organizational unit assignments of a specific employee. The results are paginated and include validity periods and hierarchy paths.",
+                    "tags": [
+                        "Employees"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "name": "page",
+                            "in": "query",
+                            "required": true,
+                            "description": "The results page to be displayed (starts at 1).",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with organizational unit assignments.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "org_unit_id": {
+                                                            "type": "integer",
+                                                            "example": 300
+                                                        },
+                                                        "org_unit_name": {
+                                                            "type": "string",
+                                                            "example": "Executive Service"
+                                                        },
+                                                        "org_unit_path_down": {
+                                                            "type": "string",
+                                                            "example": "RexxMe Company > Headquarters > Hamburg > HR Hamburg > Personnel development > Executive Service"
+                                                        },
+                                                        "org_unit_path_up": {
+                                                            "type": "string",
+                                                            "example": "Executive Service > Personnel development > HR Hamburg > Hamburg > Headquarters > RexxMe Company"
+                                                        },
+                                                        "valid_from": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-03-01"
+                                                        },
+                                                        "valid_to": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2025-08-01"
+                                                        },
+                                                        "percentage": {
+                                                            "type": "integer",
+                                                            "example": 100
+                                                        },
+                                                        "assignment_type": {
+                                                            "type": "string",
+                                                            "example": "employee"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "_links": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "self": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "first": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "last": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "href": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid query parameters."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access to this resource is denied."
+                        },
+                        "404": {
+                            "description": "Not Found – No org units found for given employee."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Something went wrong on the server."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/employees/{employeeid}/events/{eventType}": {
+                "get": {
+                    "operationId": "getEmployeeEventsByType",
+                    "summary": "Retrieve events assigned to an employee by event type",
+                    "description": "Returns the list of events assigned to a specific employee, optionally filtered by a specific event type such as E-Learning or Training.",
+                    "tags": [
+                        "Employees"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "employeeid",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the employee.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "name": "eventType",
+                            "in": "path",
+                            "required": true,
+                            "description": "The optional event type identifier to filter events (e.g., 1 for E-Learning).",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response with list of assigned events.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "event_id": {
+                                                            "type": "integer",
+                                                            "example": 201
+                                                        },
+                                                        "event_name": {
+                                                            "type": "string",
+                                                            "example": "Diversity Training (Zürich)"
+                                                        },
+                                                        "subscriber_status": {
+                                                            "type": "string",
+                                                            "example": "Genehmigt"
+                                                        },
+                                                        "event_type": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "event_from": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2017-10-02"
+                                                        },
+                                                        "event_to": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2017-10-03"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2016-09-23"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2016-09-23 14:53:11"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid parameters or malformed path."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access denied for this employee or event type."
+                        },
+                        "404": {
+                            "description": "Not Found – No events found for given employee or event type."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Request rate exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment": {
+                "post": {
+                    "operationId": "createEquipment",
+                    "summary": "Create new equipment",
+                    "description": "Creates a new equipment entry in the rexx Suite. Some fields are optional, but it is recommended to provide complete information. Returns the ID of the newly created equipment on success.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Office Chair"
+                                        },
+                                        "owner": {
+                                            "type": "string",
+                                            "example": "rfouashti"
+                                        },
+                                        "equipment_type_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "aktiv"
+                                        },
+                                        "inventory_number": {
+                                            "type": "string",
+                                            "example": "137"
+                                        },
+                                        "license_plate": {
+                                            "type": "string",
+                                            "example": "xyz"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "rfo@rexx-systems.de"
+                                        },
+                                        "manufacturer": {
+                                            "type": "string",
+                                            "example": "SteelCase"
+                                        },
+                                        "producer_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "supplier_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "insurance_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "leasing_partner_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "acquisition_costs_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "acquisition_costs_gross": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_gross_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "list_price_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "list_price_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "equipment_type_id"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Equipment created successfully.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully created."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1095
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T11:50:01+00:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "created"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req-c83a64f790b8c725861ae01875cf"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Validation failed or required fields missing."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Insufficient permissions."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment/{equipmentId}": {
+                "patch": {
+                    "operationId": "updateEquipment",
+                    "summary": "Update an existing equipment item",
+                    "description": "Updates equipment in the rexx Suite by specifying the equipment ID. Not all fields are mandatory, but providing complete information is recommended. Returns confirmation and equipment ID upon success.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to update.",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Ergonomic Sitzball"
+                                        },
+                                        "owner": {
+                                            "type": "string",
+                                            "example": "rfouashti"
+                                        },
+                                        "equipment_type_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "aktiv"
+                                        },
+                                        "inventory_number": {
+                                            "type": "string",
+                                            "example": "987"
+                                        },
+                                        "license_plate": {
+                                            "type": "string",
+                                            "example": "654"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "rfo@rexx-systems.de"
+                                        },
+                                        "manufacturer": {
+                                            "type": "string",
+                                            "example": "SteelCase"
+                                        },
+                                        "producer_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "supplier_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "insurance_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "leasing_partner_id": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "acquisition_costs_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "acquisition_costs_gross": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "acquisition_costs_gross_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "list_price_net": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 12.34
+                                        },
+                                        "list_price_net_currency_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Equipment updated successfully.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully updated."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1995
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T15:42:04+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "updated"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_239a23760a894b0871c68740b54541e1"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Validation failed or missing fields."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Invalid or missing token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Access not allowed for this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – Equipment with specified ID does not exist."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Unexpected system issue."
+                        }
+                    }
+                },
+                "delete": {
+                    "operationId": "deleteEquipment",
+                    "summary": "Delete equipment by ID",
+                    "description": "Deletes the specified equipment from the rexx Suite. Responds with confirmation and the ID of the deleted equipment.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to delete.",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successfully deleted the equipment.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment was successfully deleted."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1994
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-19T11:44:47+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "deleted"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_4da51ce8acdd957254dc91eafc6a93c6"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Invalid or missing ID."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Authentication failed or token missing."
+                        },
+                        "403": {
+                            "description": "Forbidden – You are not allowed to delete this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – No equipment found with the given ID."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Request rate exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Unexpected error occurred."
+                        }
+                    }
+                }
+            },
+            "/tenantSuffix/v1/equipment/{equipmentId}/assignments": {
+                "post": {
+                    "operationId": "assignEquipmentToEmployee",
+                    "summary": "Assign equipment to a personal ID",
+                    "description": "Assigns a specific equipment item to a personal ID (entity_id) in the rexx Suite. A complete assignment object is recommended even though not all fields are required.",
+                    "tags": [
+                        "Equipment"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "equipmentId",
+                            "in": "path",
+                            "required": true,
+                            "description": "The unique identifier of the equipment to assign.",
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignment_type": {
+                                            "type": "string",
+                                            "example": "employee"
+                                        },
+                                        "entity_id": {
+                                            "type": "integer",
+                                            "example": 465
+                                        },
+                                        "valid_from": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-03-11"
+                                        },
+                                        "valid_to": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-09-30"
+                                        },
+                                        "handover_protocol_upload_uuid": {
+                                            "type": "string",
+                                            "example": "null"
+                                        },
+                                        "return_protocol_upload_uuid": {
+                                            "type": "string",
+                                            "example": "null"
+                                        },
+                                        "comment": {
+                                            "type": "string",
+                                            "example": "Example String"
+                                        }
+                                    },
+                                    "required": [
+                                        "entity_id"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Successful assignment of equipment.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "The equipment assignment was successfully created."
+                                                    },
+                                                    "equipment_id": {
+                                                        "type": "integer",
+                                                        "example": 1095
+                                                    },
+                                                    "assignment_id": {
+                                                        "type": "integer",
+                                                        "example": 107
+                                                    }
+                                                }
+                                            },
+                                            "_meta": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-18T16:13:16+01:00"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "created"
+                                                    },
+                                                    "request_id": {
+                                                        "type": "string",
+                                                        "example": "req_b6e150ad025d46ef7661c7a7c5e274"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request – Missing required fields or invalid values."
+                        },
+                        "401": {
+                            "description": "Unauthorized – Missing or invalid token."
+                        },
+                        "403": {
+                            "description": "Forbidden – Not allowed to assign this equipment."
+                        },
+                        "404": {
+                            "description": "Not Found – Equipment not found."
+                        },
+                        "429": {
+                            "description": "Too Many Requests – Rate limit exceeded."
+                        },
+                        "500": {
+                            "description": "Internal Server Error – Contact support with request ID."
+                        }
+                    }
+                }
+            }
+        },
+        "components": {
+            "securitySchemes": {
+                "BearerToken": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "description": "Configure the API key for the bearer authentication."
+                }
+            },
+            "responses": {
+                "error": {
+                    "description": "Error"
+                }
+            }
+        }
+    }
