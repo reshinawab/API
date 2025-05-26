@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "ADP Workforce Now APIs",
+    "title": "ADP Workforce Now",
     "description": "A list of openAPIs supported by Aquera for ADP Workforce Now",
     "contact": {
       "name": "Aquera",
